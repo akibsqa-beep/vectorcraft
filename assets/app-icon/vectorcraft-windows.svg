@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <clipPath id="tile">
+      <rect width="512" height="512" rx="76" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#tile)">
+    <rect width="512" height="512" fill="#f3ece2" />
+    <rect x="2" y="2" width="508" height="508" rx="74" fill="none" stroke="#cbd9e2" stroke-width="3" />
+
+    <!-- The selected concept: a smooth editable path with its three anchor nodes. -->
+    <g fill="none" stroke="#f4c4aa" stroke-linecap="round" stroke-width="8">
+      <path d="M210 323 260 273 310 223" />
+      <path d="M348 91 397 141" />
+    </g>
+    <path d="M122 392 C143 326 148 226 197 207 C246 188 257 280 316 302 C373 324 388 250 397 141"
+          fill="none" stroke="#a995c8" stroke-linecap="round" stroke-linejoin="round" stroke-width="50" />
+
+    <g fill="#f4c4aa">
+      <rect x="203" y="316" width="14" height="14" transform="rotate(45 210 323)" />
+      <rect x="303" y="216" width="14" height="14" transform="rotate(45 310 223)" />
+      <rect x="341" y="84" width="14" height="14" transform="rotate(45 348 91)" />
+    </g>
+
+    <g>
+      <g fill="#b8e1d6">
+        <circle cx="122" cy="392" r="32" />
+        <circle cx="260" cy="273" r="32" />
+        <circle cx="397" cy="141" r="32" />
+      </g>
+      <g fill="#9ccbe8">
+        <circle cx="122" cy="392" r="23" />
+        <circle cx="260" cy="273" r="23" />
+        <circle cx="397" cy="141" r="23" />
+      </g>
+    </g>
+  </g>
+</svg>

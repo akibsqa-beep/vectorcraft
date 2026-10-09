@@ -1,10 +1,14 @@
-//! The VectorCraft brand mark: the app icon (the engraved dragon, `assets/app-icon/`, see its
-//! README). The PNG carries the icon's rounded corners; it is decoded once per context into a
+//! The VectorCraft brand mark: the platform's app icon (`assets/app-icon/`, see its README).
+//! Windows uses the pastel Bézier-path variant; other platforms use the shared dragon. The PNG
+//! carries the icon's rounded corners; it is decoded once per context into a
 //! mipmapped texture, so it stays crisp from the 22 pt app-bar mark to the About box.
 
 use egui::{Color32, Context, Id, Rect, TextureHandle, TextureOptions, Ui, pos2};
 
 /// 128 px: sharp at 44 pt on a 2× display, and the mipmaps keep 22 pt clean.
+#[cfg(windows)]
+const ICON_PNG: &[u8] = include_bytes!("../../../assets/app-icon/vectorcraft-windows-128.png");
+#[cfg(not(windows))]
 const ICON_PNG: &[u8] = include_bytes!("../../../assets/app-icon/hicolor/128x128/apps/ai.storyteller.vectorcraft.png");
 
 /// The icon's pixels (one transparent pixel if it couldn't be decoded, which a test rules out).

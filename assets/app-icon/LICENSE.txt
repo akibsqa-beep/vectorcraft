@@ -1,12 +1,17 @@
-VectorCraft app icon (vectorcraft.svg, vectorcraft-small.svg and every file derived from them in this
-directory: vectorcraft-1024.png, vectorcraft-macos-512.png, vectorcraft.icns, vectorcraft.ico, hicolor/).
-
-Original artwork made for this project by the project owner, drawn in ArtCraft and vectorised for
-VectorCraft (no third-party material). Licensed like the rest of VectorCraft, under either of
+VectorCraft app icon artwork in this directory is licensed like the rest of VectorCraft, under either
 
   * Apache License, Version 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
   * MIT license (https://opensource.org/licenses/MIT)
 
 at your option.
 
-Regenerate the derived files with packaging/icons.sh.
+The shared macOS/Linux artwork (`vectorcraft.svg`, `vectorcraft-small.svg` and the files derived
+from them in this directory, including the `hicolor/` icons) is original artwork made for this
+project by its owner.
+
+The Windows artwork (`vectorcraft-windows.svg` and its derived PNG and ICO files) is original
+VectorCraft icon artwork drawn as SVG from the pastel Bézier-path concept generated with Arena's
+image tool at the user's request and selected by the user on 2026-10-09. It is not a third-party
+image file; the shipped Windows icon is the hand-authored SVG and its rendered derivatives.
+
+Regenerate derived icons with `packaging/icons.sh`.
