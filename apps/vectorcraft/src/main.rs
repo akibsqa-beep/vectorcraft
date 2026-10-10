@@ -345,12 +345,14 @@ fn open_file(path: &str) -> Result<(), String> {
 }
 
 /// The window, Dock, taskbar and app-switcher icon (`assets/app-icon/`, see its README). macOS gets
-/// the version with Apple's transparent margin; elsewhere the full-bleed tile. The app ID matches
-/// `packaging/linux/ai.storyteller.vectorcraft.desktop` so Wayland docks find the launcher icon.
+/// the version with Apple's transparent margin; Windows uses its pastel Bézier-path variant; other
+/// platforms use the shared tile. The app ID matches `packaging/linux/ai.storyteller.vectorcraft.desktop`.
 fn app_icon() -> egui::IconData {
     #[cfg(target_os = "macos")]
     let png: &[u8] = include_bytes!("../../../assets/app-icon/vectorcraft-macos-512.png");
-    #[cfg(not(target_os = "macos"))]
+    #[cfg(windows)]
+    let png: &[u8] = include_bytes!("../../../assets/app-icon/vectorcraft-windows-256.png");
+    #[cfg(not(any(target_os = "macos", windows)))]
     let png: &[u8] = include_bytes!("../../../assets/app-icon/hicolor/256x256/apps/ai.storyteller.vectorcraft.png");
     eframe::icon_data::from_png_bytes(png).unwrap_or_default()
 }

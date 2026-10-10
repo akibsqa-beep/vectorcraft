@@ -1,51 +1,53 @@
-# VectorCraft app icon
+# VectorCraft app icons
 
-**Creature:** a regal engraved dragon, VectorCraft's mascot.
+The native apps share one icon on macOS and Linux: a regal engraved dragon in the VectorCraft palette.
+Windows uses a separate, clean Bézier-path icon in pastel colors, selected for the Windows build. The
+Windows artwork is a real SVG path drawing, not a scaled-up bitmap.
 
-**Style:** an engraving-style portrait in the Crafting Apps owl template (the FilmCraft owl): a tight
-head-and-shoulders portrait on a full-bleed field, no frame or roundel, with the body running off the tile.
+## Shared macOS/Linux icon
 
-**Palette** (exactly three colours):
+The master artwork is `vectorcraft.svg`; `vectorcraft-small.svg` is its lighter scalable version.
+The macOS files add Apple's transparent margin (tile = 824/1024 of the canvas); Linux uses the tile
+edge to edge. Windows no longer uses these shared assets for its executable, window, taskbar, or
+brand mark.
 
-| Colour | Hex | Used for |
-|---|---|---|
-| Ink | `#0b0b0c` | line work and contour |
-| Paper | `#efe9dc` | the figure |
-| VectorCraft colour | `#e8573f` | the full-bleed field |
+## Windows icon
 
-**Tile:** `viewBox="0 0 512 512"`, a rounded square with `rx=112`, clipped. The macOS files add Apple's
-transparent margin (tile = 824/1024 of the canvas); Windows and Linux use the tile edge to edge.
-
-**Provenance:** the owner's original ArtCraft drawing (2880 px, keyed to the palette), vectorised with
-craftrules `assets/logo-options/_tools/vectorize_tile.py`. The drawing is kept in craftrules at
-`craftrules/assets/app-icons/vectorcraft/source.png`, not here. `vectorcraft.svg` is the canonical
-artwork. Licence: see `LICENSE.txt`.
+`vectorcraft-windows.svg` is the canonical Windows artwork: a smooth lavender vector path with mint
+and blue anchor nodes and peach control handles on a warm cream rounded tile. It was drawn as clean
+SVG geometry from the pastel Bézier-path concept selected by the user. Its 128 px and 256 px PNGs
+are used by the Windows in-app brand mark, window/taskbar, and MSI wizard; the multi-size `.ico` is
+embedded in the executable and used by the Start Menu shortcut and MSI product entry.
 
 ## Files
 
 | File | What | Used by |
 |---|---|---|
-| `vectorcraft.svg` | master vector (traced at 2048 px, about 700 KB) | source for everything below |
-| `vectorcraft-small.svg` | lighter vector (traced at 1024 px, about 370 KB) | `hicolor/scalable` |
-| `vectorcraft-1024.png` | full tile, 1024 px | docs, store listings |
-| `vectorcraft-macos-512.png` | tile with Apple margin, 512 px | runtime Dock icon (`apps/vectorcraft/src/main.rs`) |
-| `vectorcraft.icns` | macOS icon set, 16 to 1024 px | `cargo xtask bundle` (`CFBundleIconFile`) |
-| `vectorcraft.ico` | Windows icon, 16 to 256 px | `apps/vectorcraft/build.rs` (embedded in the `.exe`) |
-| `hicolor/<size>/apps/ai.storyteller.vectorcraft.png` | Linux theme icons, 16 to 512 px; the 256 one is also the runtime icon on Windows and Linux, the 128 one the brand mark in the app bar and About box (`crates/ui-egui/src/brand.rs`) | `packaging/linux/ai.storyteller.vectorcraft.desktop` |
-| `hicolor/scalable/apps/ai.storyteller.vectorcraft.svg` | Linux scalable icon | as above |
+| `vectorcraft.svg` | shared master vector | macOS/Linux icon outputs below |
+| `vectorcraft-small.svg` | lighter shared vector | Linux scalable icon |
+| `vectorcraft-1024.png` | shared full tile, 1024 px | docs and store listings |
+| `vectorcraft-macos-512.png` | shared tile with Apple margin, 512 px | macOS runtime Dock icon |
+| `vectorcraft.icns` | shared macOS icon set, 16 to 1024 px | macOS app bundle |
+| `hicolor/<size>/apps/ai.storyteller.vectorcraft.png` | shared Linux theme icons, 16 to 512 px; 256 px also used by Linux at runtime | Linux launchers and runtime window icon |
+| `hicolor/scalable/apps/ai.storyteller.vectorcraft.svg` | shared Linux scalable icon | Linux launchers |
+| `vectorcraft-windows.svg` | pastel Bézier-path master vector | source for Windows-specific icon outputs |
+| `vectorcraft-windows-128.png` | Windows icon at 128 px | in-app brand mark and About box on Windows |
+| `vectorcraft-windows-256.png` | Windows icon at 256 px | Windows runtime window/taskbar icon and MSI wizard artwork |
+| `vectorcraft-windows.ico` | Windows icon, 16 to 256 px | embedded in the `.exe`, Start Menu and MSI product icon |
 
 ## How it reaches each OS
 
-- **macOS:** the app sets the Dock / app-switcher icon at runtime (`ViewportBuilder::with_icon`); the
-  `.app` from `cargo xtask bundle` carries `vectorcraft.icns`.
-- **Windows:** `build.rs` embeds `vectorcraft.ico` and VERSIONINFO with `winresource` (taskbar, Start
-  menu, Explorer, Alt-Tab); the runtime icon covers the title bar.
-- **Linux:** install `packaging/linux/ai.storyteller.vectorcraft.desktop` to `share/applications/` and
-  `hicolor/` to `share/icons/`. The app sets its Wayland app ID / X11 class to
-  `ai.storyteller.vectorcraft`, so the dock matches the window to the launcher.
+- **macOS:** the app sets the Dock / app-switcher icon at runtime; the `.app` carries `vectorcraft.icns`.
+- **Windows:** `apps/vectorcraft/build.rs` embeds `vectorcraft-windows.ico`; `apps/vectorcraft/src/main.rs`
+  uses the 256 px PNG for the window and taskbar; `crates/ui-egui/src/brand.rs` uses the 128 px PNG.
+  The MSI gets the same artwork for its shortcut, product entry, and wizard.
+- **Linux:** install `packaging/linux/ai.storyteller.vectorcraft.desktop` and `hicolor/` to the usual
+  application and icon directories. The app ID is `ai.storyteller.vectorcraft` so docks match the
+  launcher icon.
 
 ## Regenerate
 
-Edit or replace `vectorcraft.svg` (and `vectorcraft-small.svg`), then run `packaging/icons.sh`
-(needs `resvg`; `iconutil` on macOS for the `.icns`). It writes every PNG, the `.ico` (via
-`cargo xtask ico`) and the `.icns`.
+Edit the shared `vectorcraft.svg` (and `vectorcraft-small.svg`) or the Windows-specific
+`vectorcraft-windows.svg`, then run `packaging/icons.sh`. It needs `resvg`; packing Windows `.ico`
+files also runs `cargo xtask ico`, and macOS `.icns` regeneration uses Apple's `iconutil`. The
+outputs are committed, so ordinary app builds and packaging do not need these tools.

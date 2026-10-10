@@ -98,8 +98,8 @@ Copy-Item (Join-Path $Bin 'vectorcraft.exe'), (Join-Path $Bin 'vectorcraft-cli.e
 # (their text sits on the right; the left 164 px are ours). Both must be 24-bit BMPs.
 function New-InstallerArt([string] $IconPng, [string] $BannerOut, [string] $DialogOut) {
   Add-Type -AssemblyName System.Drawing
-  $paper = [System.Drawing.ColorTranslator]::FromHtml('#efe9dc')
-  $accent = [System.Drawing.ColorTranslator]::FromHtml('#e8573f')
+  $paper = [System.Drawing.ColorTranslator]::FromHtml('#f3ece2')
+  $accent = [System.Drawing.ColorTranslator]::FromHtml('#a995c8')
   $icon = [System.Drawing.Image]::FromFile($IconPng)
   try {
     foreach ($spec in @(@($BannerOut, 493, 58), @($DialogOut, 493, 312))) {
@@ -127,14 +127,14 @@ function New-InstallerArt([string] $IconPng, [string] $BannerOut, [string] $Dial
 }
 $Banner = Join-Path $Stage 'installer-banner.bmp'
 $Dialog = Join-Path $Stage 'installer-dialog.bmp'
-New-InstallerArt (Join-Path $Root 'assets\app-icon\hicolor\256x256\apps\ai.storyteller.vectorcraft.png') $Banner $Dialog
+New-InstallerArt (Join-Path $Root 'assets\app-icon\vectorcraft-windows-256.png') $Banner $Dialog
 
 $Msi = Join-Path $Dist "vectorcraft-$Version-windows-$Arch.msi"
 Invoke-Native 'wix build' {
   wix build (Join-Path $PSScriptRoot 'vectorcraft.wxs') -arch $Arch `
     -ext WixToolset.UI.wixext -ext WixToolset.Util.wixext `
     -culture en-US -loc (Join-Path $PSScriptRoot 'vectorcraft.en-us.wxl') `
-    -d "Version=$MsiVersion" -d "DisplayVersion=$Version" -d "BinDir=$Stage" -d "IconPath=$(Join-Path $Root 'assets\app-icon\vectorcraft.ico')" `
+    -d "Version=$MsiVersion" -d "DisplayVersion=$Version" -d "BinDir=$Stage" -d "IconPath=$(Join-Path $Root 'assets\app-icon\vectorcraft-windows.ico')" `
     -d "BannerBmp=$Banner" -d "DialogBmp=$Dialog" `
     -o $Msi
 }
